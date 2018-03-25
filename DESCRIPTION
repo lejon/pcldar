@@ -1,0 +1,17 @@
+Type: Package
+Package: pcldar
+Version: 0.0.1
+Date: 2018-03-24
+Title: R Wrapper for our Partially Collapsed LDA (PCLDA)
+Author: Leif Jonsson
+Authors@R: c(person("Leif", "Jonsson", email = "leif.jonsson@gmail.com", role = c("aut", "cre")))
+Maintainer: Leif Jonsson <leif.jonsson@gmail.com>
+Description: A R wrapper package for our PCLDA Java package.
+Depends:
+    R (>= 2.7.0),
+    rJava (>= 0.5-0)
+SystemRequirements: Java (>= 1.7)
+License: BSD_2_clause + file LICENSE
+Packaged: 2018-03-24 20:40:55 UTC; lejon
+Repository: CRAN
+RoxygenNote: 5.0.1
