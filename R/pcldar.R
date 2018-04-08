@@ -46,6 +46,22 @@ load_lda_dataset <- function(fn, ldaconfig) {
 
 #' @importFrom rJava .jnew .jcall
 #' @export
+create_lda_dataset <- function(doclines, ldaconfig, stoplist_fn = "stoplist.txt") {
+  stringIterator <- .jnew("cc.mallet.util.StringClassArrayIterator", doclines)
+  util <- .jnew("cc.mallet.util.LDAUtils")
+  pipe <- .jcall(util,"Lcc/mallet/pipe/Pipe;","buildSerialPipe", stoplist_fn,
+                 .jcast(.jnull(),"cc.mallet.types.Alphabet"))
+
+  il <- .jnew("cc.mallet.types.InstanceList",pipe)
+  .jcall(il,"V","addThruPipe", .jcast(stringIterator,"java.util.Iterator"))
+  .jcall(il,"V","addThruPipe", .jcast(stringIterator,"java.util.Iterator"))
+  #trainingInstances.getAlphabet().stopGrowth();
+
+  return(il)
+}
+
+#' @importFrom rJava .jnew .jcall
+#' @export
 sample_pclda <- function(ldaconfig, ds, iterations = 2000, samplerType="cc.mallet.topics.PolyaUrnSpaliasLDA") {
   #.jconstructors(samplerType)
   lcfg <- .jcast(ldaconfig,"cc.mallet.configuration.LDAConfiguration")
@@ -147,7 +163,8 @@ get_top_relevance_words <- function(lda,config,nr_words=20, lambda=0.6) {
 #' @importFrom rJava .jcall
 #' @export
 calculate_ttm_density <- function(typeTopicMatrix) {
-   return(.jcall(util,"D", "calculateMatrixDensity",.jarray(typeTopicMatrix,dispatch = T)))
+  util <- .jnew("cc.mallet.util.LDAUtils")
+  return(.jcall(util,"D", "calculateMatrixDensity",.jarray(typeTopicMatrix,dispatch = T)))
 }
 
 
