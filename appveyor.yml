@@ -23,12 +23,9 @@ environment:
 
 # See https://stackoverflow.com/questions/29941797/onload-failed-in-loadnamespace-for-rjava-when-installing-a-package
 build_script:
-  - R -e "install.packages('rJava', repos = 'http://cran.us.r-project.org', INSTALL_opts='--no-multiarch')"
-  - ps: dir
-  - ps: Copy-Item mallet\* .
-  - ps: Remove-Item -Recurse -Force mallet\
+#  - R -e "install.packages('rJava', repos = 'http://cran.us.r-project.org', INSTALL_opts='--no-multiarch')"
 #  - ps: cd mallet
-  - ps: dir 
+  - ps: dir
   - travis-tool.sh install_deps
 
 test_script:
