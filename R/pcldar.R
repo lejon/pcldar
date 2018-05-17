@@ -35,7 +35,7 @@ new_simple_lda_config <- function(dataset_fn, nr_topics = 20, alpha = 0.01,
   return(slc)
 }
 
-#' @importFrom rJava .jnew .jcall
+#' @importFrom rJava .jnew .jcall .jcast
 #' @export
 load_lda_dataset <- function(fn, ldaconfig) {
   util <- .jnew("cc.mallet.util.LDAUtils")
@@ -44,7 +44,7 @@ load_lda_dataset <- function(fn, ldaconfig) {
   return(ds)
 }
 
-#' @importFrom rJava .jnew .jcall
+#' @importFrom rJava .jnew .jcall .jarray
 #' @export
 create_lda_dataset <- function(doclines, ldaconfig, stoplist_fn = "stoplist.txt") {
   stringIterator <- .jnew("cc.mallet.util.StringClassArrayIterator", doclines)
@@ -60,7 +60,7 @@ create_lda_dataset <- function(doclines, ldaconfig, stoplist_fn = "stoplist.txt"
   return(il)
 }
 
-#' @importFrom rJava .jnew .jcall
+#' @importFrom rJava .jnew .jcall .jarray .jcast .jnull
 #' @export
 sample_pclda <- function(ldaconfig, ds, iterations = 2000, samplerType="cc.mallet.topics.PolyaUrnSpaliasLDA") {
   #.jconstructors(samplerType)
@@ -121,7 +121,7 @@ get_phi <- function(lda) {
   return(phi)
 }
 
-#' @importFrom rJava .jnew .jcall
+#' @importFrom rJava .jnew .jcall .jarray
 #' @export
 get_topwords <- function(lda,nr_words=20) {
   util <- .jnew("cc.mallet.util.LDAUtils")
@@ -138,7 +138,7 @@ get_topwords <- function(lda,nr_words=20) {
   tw
 }
 
-#' @importFrom rJava .jnew .jcall
+#' @importFrom rJava .jnew .jcall .jarray
 #' @export
 get_top_relevance_words <- function(lda,config,nr_words=20, lambda=0.6) {
   util <- .jnew("cc.mallet.util.LDAUtils")
@@ -160,7 +160,7 @@ get_top_relevance_words <- function(lda,config,nr_words=20, lambda=0.6) {
   rw
 }
 
-#' @importFrom rJava .jcall
+#' @importFrom rJava .jcall .jarray
 #' @export
 calculate_ttm_density <- function(typeTopicMatrix) {
   util <- .jnew("cc.mallet.util.LDAUtils")
