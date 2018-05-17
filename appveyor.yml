@@ -20,6 +20,7 @@ platform: x64
 environment:
   R_ARCH: x64
   R_BUILD_ARGS: --no-multiarch
+  R_CHECK_ARGS: --no-multiarch
 
 # See https://stackoverflow.com/questions/29941797/onload-failed-in-loadnamespace-for-rjava-when-installing-a-package
 build_script:
@@ -27,7 +28,6 @@ build_script:
 #  - ps: cd mallet
   - ps: dir
   - travis-tool.sh install_deps
-  - ps: Get-ChildItem Env:
 
 test_script:
 #  - ps: cd mallet
