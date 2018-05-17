@@ -20,7 +20,7 @@ platform: x64
 environment:
   R_ARCH: x64
   R_BUILD_ARGS: --no-multiarch
-  R_CHECK_ARGS: --no-multiarch
+  R_CHECK_ARGS: --no-multiarch --no-manual
 
 # See https://stackoverflow.com/questions/29941797/onload-failed-in-loadnamespace-for-rjava-when-installing-a-package
 build_script:
