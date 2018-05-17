@@ -27,7 +27,7 @@ build_script:
 #  - ps: cd mallet
   - ps: dir
   - travis-tool.sh install_deps
-  - ps: -command "R CMD javareconf"
+  - ps: Get-ChildItem Env:
 
 test_script:
 #  - ps: cd mallet
