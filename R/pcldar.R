@@ -1,4 +1,7 @@
-
+#' new_simple_lda_config
+#'
+#' Create a new LDA config file
+#'
 #' @importFrom rJava .jnew .jcall
 #' @export
 new_simple_lda_config <- function(dataset_fn, nr_topics = 20, alpha = 0.01,
@@ -35,6 +38,10 @@ new_simple_lda_config <- function(dataset_fn, nr_topics = 20, alpha = 0.01,
   return(slc)
 }
 
+#' load_lda_dataset
+#'
+#' Load an LDA dataset from file
+#'
 #' @importFrom rJava .jnew .jcall .jcast
 #' @export
 load_lda_dataset <- function(fn, ldaconfig) {
@@ -44,6 +51,10 @@ load_lda_dataset <- function(fn, ldaconfig) {
   return(ds)
 }
 
+#' create_lda_dataset
+#'
+#' Create an LDA dataset from existing string vector
+#'
 #' @importFrom rJava .jnew .jcall .jarray
 #' @export
 create_lda_dataset <- function(doclines, ldaconfig, stoplist_fn = "stoplist.txt") {
@@ -60,6 +71,10 @@ create_lda_dataset <- function(doclines, ldaconfig, stoplist_fn = "stoplist.txt"
   return(il)
 }
 
+#' sample_pclda
+#'
+#' Run the PCLDA (default Polya Urn) sampler
+#'
 #' @importFrom rJava .jnew .jcall .jarray .jcast .jnull
 #' @export
 sample_pclda <- function(ldaconfig, ds, iterations = 2000, samplerType="cc.mallet.topics.PolyaUrnSpaliasLDA") {
@@ -72,6 +87,10 @@ sample_pclda <- function(ldaconfig, ds, iterations = 2000, samplerType="cc.malle
   return(lda)
 }
 
+#' print_top_words
+#'
+#' Print the 'top words' from a sampled word matrix
+#'
 #' @importFrom rJava .jnew .jcall
 #' @export
 print_top_words <- function(word_matrix) {
@@ -79,6 +98,10 @@ print_top_words <- function(word_matrix) {
   return(util$formatTopWords(.jarray(word_matrix,dispatch = T)))
 }
 
+#' extract_vocabulary
+#'
+#' Extract the vocabulary as a string vector from an MALLET Alphabet
+#'
 #' @importFrom rJava .jnew .jcall
 #' @export
 extract_vocabulary <- function(alphabet) {
@@ -87,12 +110,21 @@ extract_vocabulary <- function(alphabet) {
   return(.jcall(util,"[S", "extractVocabulaty", alphabet))
 }
 
+#' get_alphabet
+#'
+#' Get the Alphabet (as a java object) from an LDA sampler
+#'
 #' @importFrom rJava .jnew .jcall
 #' @export
 get_alphabet <- function(lda) {
   return(.jcall(lda,"Lcc/mallet/types/Alphabet;","getAlphabet"))
 }
 
+#' get_theta_estimate
+#'
+#' Get an estimate of the document topic distribution
+#' (the theta matrix) from an LDA sampler
+#'
 #' @importFrom rJava .jcall
 #' @export
 get_theta_estimate <- function(lda) {
@@ -100,6 +132,10 @@ get_theta_estimate <- function(lda) {
   return(theta)
 }
 
+#' get_z_means
+#'
+#' Get the mean of the topic indicators from an LDA sampler
+#'
 #' @importFrom rJava .jcall
 #' @export
 get_z_means <- function(lda) {
@@ -107,6 +143,10 @@ get_z_means <- function(lda) {
   return(zb)
 }
 
+#' get_type_topics
+#'
+#' Get the type/topic matrix from and LDA sampler
+#'
 #' @importFrom rJava .jcall
 #' @export
 get_type_topics <- function(lda) {
@@ -114,6 +154,10 @@ get_type_topics <- function(lda) {
   return(ttm)
 }
 
+#' get_phi
+#'
+#' Get the word/topic distribution (phi matrix) from an LDA sampler
+#'
 #' @importFrom rJava .jcall
 #' @export
 get_phi <- function(lda) {
@@ -121,6 +165,10 @@ get_phi <- function(lda) {
   return(phi)
 }
 
+#' get_topwords
+#'
+#' Get the top words per topic from an LDA sampler
+#'
 #' @importFrom rJava .jnew .jcall .jarray
 #' @export
 get_topwords <- function(lda,nr_words=20) {
@@ -138,6 +186,11 @@ get_topwords <- function(lda,nr_words=20) {
   tw
 }
 
+#' get_top_relevance_words
+#'
+#' Get the 'top relevance words' (weighted version of top words)
+#' per topic from an LDA sampler
+#'
 #' @importFrom rJava .jnew .jcall .jarray
 #' @export
 get_top_relevance_words <- function(lda,config,nr_words=20, lambda=0.6) {
@@ -160,6 +213,10 @@ get_top_relevance_words <- function(lda,config,nr_words=20, lambda=0.6) {
   rw
 }
 
+#' calculate_ttm_density
+#'
+#' Calculate the density (sparsity) of the type topic matrix
+#'
 #' @importFrom rJava .jcall .jarray
 #' @export
 calculate_ttm_density <- function(typeTopicMatrix) {
