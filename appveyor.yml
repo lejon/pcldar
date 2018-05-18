@@ -9,6 +9,12 @@ init:
 
 install:
   ps: Bootstrap
+  # Install miktex
+  if not exist c:\miktex\texmfs\install\miktex\bin\pdflatex.exe appveyor DownloadFile http://miktex.org/download/ctan/systems/win32/miktex/setup/windows-x86/miktex-portable.exe
+  if not exist c:\miktex\texmfs\install\miktex\bin\pdflatex.exe 7z x miktex-portable.exe -oC:\miktex >NUL
+  set "PATH=%PATH%;c:\miktex\texmfs\install\miktex\bin"
+  # Enable installing miktex  packages on the fly
+  initexmf --set-config-value [MPM]AutoInstall=1
 
 cache:
   - C:\RLibrary
@@ -20,7 +26,8 @@ platform: x64
 environment:
   R_ARCH: x64
   R_BUILD_ARGS: --no-multiarch
-  R_CHECK_ARGS: --no-multiarch --no-manual
+  R_CHECK_ARGS: --no-multiarch
+  #R_CHECK_ARGS: --no-multiarch --no-manual
 
 # See https://stackoverflow.com/questions/29941797/onload-failed-in-loadnamespace-for-rjava-when-installing-a-package
 build_script:
