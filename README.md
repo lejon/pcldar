@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/lejon/pcldar.svg?branch=master)](https://travis-ci.org/lejon/pcldar)
+
 # pcldar
 R Wrapper for our Partially Collapsed Gibbs sampler for LDA (PCLDA) described in the article 
 
