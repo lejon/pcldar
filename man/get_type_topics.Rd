@@ -6,6 +6,9 @@
 \usage{
 get_type_topics(lda)
 }
+\arguments{
+\item{lda}{LDA sampler object}
+}
 \description{
 Get the type/topic matrix from and LDA sampler
 }

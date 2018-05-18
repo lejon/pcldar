@@ -6,6 +6,9 @@
 \usage{
 get_alphabet(lda)
 }
+\arguments{
+\item{lda}{LDA sampler object}
+}
 \description{
 Get the Alphabet (as a java object) from an LDA sampler
 }

@@ -6,6 +6,11 @@
 \usage{
 get_topwords(lda, nr_words = 20)
 }
+\arguments{
+\item{lda}{LDA sampler object}
+
+\item{nr_words}{number of top words per topic to retrieve}
+}
 \description{
 Get the top words per topic from an LDA sampler
 }

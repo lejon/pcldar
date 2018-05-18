@@ -6,6 +6,9 @@
 \usage{
 extract_vocabulary(alphabet)
 }
+\arguments{
+\item{alphabet}{Java MALLET Alphabet object, obtained by 'get_alphabet(lda)'}
+}
 \description{
 Extract the vocabulary as a string vector from an MALLET Alphabet
 }
