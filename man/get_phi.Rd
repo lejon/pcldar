@@ -6,6 +6,9 @@
 \usage{
 get_phi(lda)
 }
+\arguments{
+\item{lda}{LDA sampler object}
+}
 \description{
 Get the word/topic distribution (phi matrix) from an LDA sampler
 }

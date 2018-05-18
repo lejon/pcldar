@@ -6,6 +6,9 @@
 \usage{
 get_z_means(lda)
 }
+\arguments{
+\item{lda}{LDA sampler object}
+}
 \description{
 Get the mean of the topic indicators from an LDA sampler
 }

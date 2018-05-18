@@ -6,6 +6,9 @@
 \usage{
 get_theta_estimate(lda)
 }
+\arguments{
+\item{lda}{LDA sampler object}
+}
 \description{
 Get an estimate of the document topic distribution
 (the theta matrix) from an LDA sampler

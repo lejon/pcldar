@@ -6,6 +6,15 @@
 \usage{
 get_top_relevance_words(lda, config, nr_words = 20, lambda = 0.6)
 }
+\arguments{
+\item{lda}{LDA sampler object}
+
+\item{config}{LDA config object}
+
+\item{nr_words}{number of top words per topic to retrieve}
+
+\item{lambda}{lambda value when calculating the relevance}
+}
 \description{
 Get the 'top relevance words' (weighted version of top words)
 per topic from an LDA sampler

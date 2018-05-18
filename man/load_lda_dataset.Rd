@@ -6,7 +6,16 @@
 \usage{
 load_lda_dataset(fn, ldaconfig)
 }
+\arguments{
+\item{fn}{filename of dataset}
+
+\item{ldaconfig}{LDA config object}
+}
 \description{
-Load an LDA dataset from file
+Load an LDA dataset from file. The file should be in LDA format i.e.:
+<unique id>\\t<doc class>\\t<document content>\\n)
+The document class is not used in by the LDA sampler. Each line
+must be concluded with a newline so all other newlines in the
+document must be removed. The document content CAN have \\t in it.
 }
 

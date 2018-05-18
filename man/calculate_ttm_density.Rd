@@ -6,6 +6,9 @@
 \usage{
 calculate_ttm_density(typeTopicMatrix)
 }
+\arguments{
+\item{typeTopicMatrix}{type topic matrix, obtained by 'get_type_topics(lda)'}
+}
 \description{
 Calculate the density (sparsity) of the type topic matrix
 }

@@ -7,6 +7,15 @@
 sample_pclda(ldaconfig, ds, iterations = 2000,
   samplerType = "cc.mallet.topics.PolyaUrnSpaliasLDA")
 }
+\arguments{
+\item{ldaconfig}{LDA config object}
+
+\item{ds}{LDA dataset}
+
+\item{iterations}{number of iterations to run}
+
+\item{samplerType}{Java class of the sampler. Must implement the LDASampler interface}
+}
 \description{
 Run the PCLDA (default Polya Urn) sampler
 }
