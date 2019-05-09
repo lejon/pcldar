@@ -93,7 +93,6 @@ create_lda_dataset <- function(doclines, ldaconfig, stoplist_fn = "stoplist.txt"
 
   il <- .jnew("cc.mallet.types.InstanceList",pipe)
   .jcall(il,"V","addThruPipe", .jcast(stringIterator,"java.util.Iterator"))
-  .jcall(il,"V","addThruPipe", .jcast(stringIterator,"java.util.Iterator"))
   #trainingInstances.getAlphabet().stopGrowth();
 
   return(il)
