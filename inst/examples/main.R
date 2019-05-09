@@ -5,7 +5,7 @@ iterations <- 1000
 cnf <- new_simple_lda_config(ds_fn,
                           nr_topics = nr_topics, alpha = 0.01,
                           beta = (nr_topics / 50), iterations = iterations,
-                          rareword_threshold = 10, scheme="polyaurn",
+                          rareword_threshold = 10,
                           stoplist_fn = "stoplist.txt", topic_interval = 10,
                           tmpdir = "/tmp")
 

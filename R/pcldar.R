@@ -8,9 +8,6 @@
 #' @param beta symmetric beta prior
 #' @param iterations number of iterations to sample
 #' @param rareword_threshold min. number of occurences of a word to be kept
-#' @param scheme sampling sceme ("adlda", "uncollapsed", "collapsed", "lightcollapsed"
-#' "efficient_uncollapsed", "spalias", "polyaurn" (default),
-#' "spalias_priors", "lightpclda", "lightpcldaw2", "nzvsspalias")
 #' @param stoplist_fn filenname of stoplist file (one word per line) (default "stoplist.txt")
 #' @param topic_interval how often to print topic info during sampling
 #' @param tmpdir temporary directory for intermediate storage of logging data (default "tmp")
@@ -19,7 +16,7 @@
 #' @export
 new_simple_lda_config <- function(dataset_fn, nr_topics = 20, alpha = 0.01,
                                beta = (nr_topics / 50), iterations = 2000,
-                               rareword_threshold = 10, scheme="polyaurn",
+                               rareword_threshold = 10,
                                stoplist_fn = "stoplist.txt", topic_interval = 10,
                                tmpdir = "/tmp") {
   lu <- .jnew("cc.mallet.util.LoggingUtils")
@@ -30,7 +27,6 @@ new_simple_lda_config <- function(dataset_fn, nr_topics = 20, alpha = 0.01,
   #                       Integer startDiagnostic, int seed, String datasetFn)
   slc <- .jnew("cc.mallet.configuration.SimpleLDAConfiguration")
   .jcall(slc,"V","setLoggingUtil",lu)
-  .jcall(slc,"V","setScheme",scheme)
   .jcall(slc,"V","setNoTopics",as.integer(nr_topics))
   alpha <- .jnew("java.lang.Double",alpha)
   .jcall(slc,"V","setAlpha",alpha)
@@ -79,8 +75,8 @@ load_lda_dataset <- function(fn, ldaconfig) {
 #' The document class is not used in by the LDA sampler.
 #' The document content CAN have \\t in it.
 #'
-#' @param doclines string vector with document data
-#' @param ldaconfig LDA config object
+#' @param train string vector with document data
+#' @param test string vector with test document data
 #' @param stoplist_fn filiename of stoplist file
 #'
 #' @importFrom rJava .jnew .jcall .jarray
