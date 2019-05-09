@@ -32,6 +32,29 @@ new_simple_lda_config(dataset_fn, nr_topics = 20, alpha = 0.01,
 
 \item{tmpdir}{temporary directory for intermediate storage of logging data (default "tmp")}
 }
+\arguments{
+\item{dataset_fn}{filename of dataset (in LDA format)}
+
+\item{nr_topics}{number of topics to use}
+
+\item{alpha}{symmetric alpha prior}
+
+\item{beta}{symmetric beta prior}
+
+\item{iterations}{number of iterations to sample}
+
+\item{rareword_threshold}{min. number of occurences of a word to be kept}
+
+\item{scheme}{sampling sceme ("adlda", "uncollapsed", "collapsed", "lightcollapsed"
+"efficient_uncollapsed", "spalias", "polyaurn" (default),
+"spalias_priors", "lightpclda", "lightpcldaw2", "nzvsspalias")}
+
+\item{stoplist_fn}{filenname of stoplist file (one word per line) (default "stoplist.txt")}
+
+\item{topic_interval}{how often to print topic info during sampling}
+
+\item{tmpdir}{temporary directory for intermediate storage of logging data (default "tmp")}
+}
 \description{
 Create a new LDA config file
 }
