@@ -12,4 +12,3 @@ get_type_topics(lda)
 \description{
 Get the type/topic matrix from and LDA sampler
 }
-

@@ -4,20 +4,19 @@
 \alias{create_lda_dataset}
 \title{create_lda_dataset}
 \usage{
-create_lda_dataset(doclines, ldaconfig, stoplist_fn = "stoplist.txt")
+create_lda_dataset(train, test = NULL, stoplist_fn = "stoplist.txt")
 }
 \arguments{
+\item{stoplist_fn}{filiename of stoplist file}
+
 \item{doclines}{string vector with document data}
 
 \item{ldaconfig}{LDA config object}
-
-\item{stoplist_fn}{filiename of stoplist file}
 }
 \description{
 Create an LDA dataset from existing string vector. Each entry
 in the vector must be a string with the following format:
-<unique id>\\t<doc class>\\t<document content>\\n)
+<unique id>\\t<doc class>\\t<document content>
 The document class is not used in by the LDA sampler.
 The document content CAN have \\t in it.
 }
-

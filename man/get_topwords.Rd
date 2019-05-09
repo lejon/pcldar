@@ -14,4 +14,3 @@ get_topwords(lda, nr_words = 20)
 \description{
 Get the top words per topic from an LDA sampler
 }
-

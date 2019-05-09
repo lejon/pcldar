@@ -12,4 +12,3 @@ get_phi(lda)
 \description{
 Get the word/topic distribution (phi matrix) from an LDA sampler
 }
-

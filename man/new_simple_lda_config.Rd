@@ -6,8 +6,8 @@
 \usage{
 new_simple_lda_config(dataset_fn, nr_topics = 20, alpha = 0.01,
   beta = (nr_topics/50), iterations = 2000, rareword_threshold = 10,
-  scheme = "polyaurn", stoplist_fn = "stoplist.txt", topic_interval = 10,
-  tmpdir = "/tmp")
+  scheme = "polyaurn", stoplist_fn = "stoplist.txt",
+  topic_interval = 10, tmpdir = "/tmp")
 }
 \arguments{
 \item{dataset_fn}{filename of dataset (in LDA format)}
@@ -35,4 +35,3 @@ new_simple_lda_config(dataset_fn, nr_topics = 20, alpha = 0.01,
 \description{
 Create a new LDA config file
 }
-

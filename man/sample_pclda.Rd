@@ -5,7 +5,7 @@
 \title{sample_pclda}
 \usage{
 sample_pclda(ldaconfig, ds, iterations = 2000,
-  samplerType = "cc.mallet.topics.PolyaUrnSpaliasLDA")
+  samplerType = "cc.mallet.topics.PolyaUrnSpaliasLDA", testset = NULL)
 }
 \arguments{
 \item{ldaconfig}{LDA config object}
@@ -19,4 +19,3 @@ sample_pclda(ldaconfig, ds, iterations = 2000,
 \description{
 Run the PCLDA (default Polya Urn) sampler
 }
-

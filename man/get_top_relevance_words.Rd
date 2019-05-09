@@ -19,4 +19,3 @@ get_top_relevance_words(lda, config, nr_words = 20, lambda = 0.6)
 Get the 'top relevance words' (weighted version of top words)
 per topic from an LDA sampler
 }
-

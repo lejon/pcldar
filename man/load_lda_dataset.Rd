@@ -18,4 +18,3 @@ The document class is not used in by the LDA sampler. Each line
 must be concluded with a newline so all other newlines in the
 document must be removed. The document content CAN have \\t in it.
 }
-

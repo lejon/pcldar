@@ -13,4 +13,3 @@ print_top_words(word_matrix)
 Print the 'top words' from a sampled word matrix
 obtained using 'get_topwords(lda)'
 }
-

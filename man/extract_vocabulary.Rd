@@ -12,4 +12,3 @@ extract_vocabulary(alphabet)
 \description{
 Extract the vocabulary as a string vector from an MALLET Alphabet
 }
-

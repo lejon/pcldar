@@ -12,4 +12,3 @@ get_alphabet(lda)
 \description{
 Get the Alphabet (as a java object) from an LDA sampler
 }
-

@@ -12,4 +12,3 @@ get_z_means(lda)
 \description{
 Get the mean of the topic indicators from an LDA sampler
 }
-

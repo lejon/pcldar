@@ -75,7 +75,7 @@ load_lda_dataset <- function(fn, ldaconfig) {
 #'
 #' Create an LDA dataset from existing string vector. Each entry
 #' in the vector must be a string with the following format:
-#' <unique id>\\t<doc class>\\t<document content>\\n)
+#' <unique id>\\t<doc class>\\t<document content>
 #' The document class is not used in by the LDA sampler.
 #' The document content CAN have \\t in it.
 #'
@@ -85,8 +85,8 @@ load_lda_dataset <- function(fn, ldaconfig) {
 #'
 #' @importFrom rJava .jnew .jcall .jarray
 #' @export
-create_lda_dataset <- function(doclines, ldaconfig, stoplist_fn = "stoplist.txt") {
-  stringIterator <- .jnew("cc.mallet.util.StringClassArrayIterator", doclines)
+create_lda_dataset <- function(train, test = NULL, stoplist_fn = "stoplist.txt") {
+  stringIterator <- .jnew("cc.mallet.util.StringClassArrayIterator", train)
   util <- .jnew("cc.mallet.util.LDAUtils")
   pipe <- .jcall(util,"Lcc/mallet/pipe/Pipe;","buildSerialPipe", stoplist_fn,
                  .jcast(.jnull(),"cc.mallet.types.Alphabet"))
@@ -94,6 +94,16 @@ create_lda_dataset <- function(doclines, ldaconfig, stoplist_fn = "stoplist.txt"
   il <- .jnew("cc.mallet.types.InstanceList",pipe)
   .jcall(il,"V","addThruPipe", .jcast(stringIterator,"java.util.Iterator"))
   #trainingInstances.getAlphabet().stopGrowth();
+
+  if(!is.null(test)) {
+    stringIterator <- .jnew("cc.mallet.util.StringClassArrayIterator", test)
+    trainAlphabet <- .jcall(il,"Lcc/mallet/types/Alphabet;","getAlphabet")
+    testPipe <- .jcall(util,"Lcc/mallet/pipe/Pipe;","buildSerialPipe", stoplist_fn,
+                       trainAlphabet)
+    iltest <- .jnew("cc.mallet.types.InstanceList",testPipe)
+    .jcall(iltest,"V","addThruPipe", .jcast(stringIterator,"java.util.Iterator"))
+    return(list(train=il, test=iltest))
+  }
 
   return(il)
 }
@@ -109,12 +119,17 @@ create_lda_dataset <- function(doclines, ldaconfig, stoplist_fn = "stoplist.txt"
 #'
 #' @importFrom rJava .jnew .jcall .jarray .jcast .jnull
 #' @export
-sample_pclda <- function(ldaconfig, ds, iterations = 2000, samplerType="cc.mallet.topics.PolyaUrnSpaliasLDA") {
+sample_pclda <- function(ldaconfig, ds, iterations = 2000,
+                         samplerType="cc.mallet.topics.PolyaUrnSpaliasLDA",
+                         testset = NULL) {
   #.jconstructors(samplerType)
   lcfg <- .jcast(ldaconfig,"cc.mallet.configuration.LDAConfiguration")
   ex <- tryCatch(lda <- .jnew(samplerType,lcfg), NullPointerException = function(ex) ex)
   #lda <- .jnew("cc.mallet.topics.SpaliasUncollapsedParallelLDA",.jcast(slc,"cc.mallet.configuration.LDAConfiguration"))
   .jcall(lda,"V", "addInstances", ds)
+  if(!is.null(testset)) {
+    .jcall(lda,"V", "addTestInstances", testset)
+  }
   .jcall(lda,"V", "sample", as.integer(iterations))
   return(lda)
 }
@@ -143,9 +158,35 @@ print_top_words <- function(word_matrix) {
 #' @export
 extract_vocabulary <- function(alphabet) {
   util <- .jnew("cc.mallet.util.LDAUtils")
-  #.jcall(util,"[Ljava/lang/String;", "extractVocabulaty", alph)
   return(.jcall(util,"[S", "extractVocabulaty", alphabet))
 }
+
+#' extract_term_counts
+#'
+#' Extract how many times each word occurs. Same order as the vocabulary
+#'
+#' @param instances the dataset to query
+#'
+#' @importFrom rJava .jnew .jcall
+#' @export
+extract_term_counts <- function(instances) {
+  util <- .jnew("cc.mallet.util.LDAUtils")
+  return(.jcall(util,"[I", "extractTermCounts", instances))
+}
+
+#' extract_doc_lengths
+#'
+#' Extract the the number of tokens in each document. Same order as the documents
+#'
+#' @param instances the dataset to query
+#'
+#' @importFrom rJava .jnew .jcall
+#' @export
+extract_doc_lengths <- function(instances) {
+  util <- .jnew("cc.mallet.util.LDAUtils")
+  return(.jcall(util,"[I", "extractDocLength", instances))
+}
+
 
 #' get_alphabet
 #'
@@ -281,6 +322,32 @@ calculate_ttm_density <- function(typeTopicMatrix) {
   return(.jcall(util,"D", "calculateMatrixDensity",.jarray(typeTopicMatrix,dispatch = T)))
 }
 
+#' get_log_likelihood
+#'
+#' Extract the log likelihood for each iteration
+#'
+#' @param lda the trained lda model
+#'
+#' @importFrom rJava .jcall
+#' @export
+get_log_likelihood <- function(lda) {
+  ll  <- .jcall(lda,"[D","getLogLikelihood",simplify = TRUE)
+  return(ll)
+}
+
+#' get_held_out_log_likelihood
+#'
+#' Extract the heldo log likelihood for each iteration. The sampler must have
+#' been run with a test set
+#'
+#' @param lda the trained lda model
+#'
+#' @importFrom rJava .jcall
+#' @export
+get_held_out_log_likelihood <- function(lda) {
+  ll  <- .jcall(lda,"[D","getHeldOutLogLikelihood",simplify = TRUE)
+  return(ll)
+}
 
 
 

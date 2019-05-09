@@ -2,8 +2,12 @@
 
 export(calculate_ttm_density)
 export(create_lda_dataset)
+export(extract_doc_lengths)
+export(extract_term_counts)
 export(extract_vocabulary)
 export(get_alphabet)
+export(get_held_out_log_likelihood)
+export(get_log_likelihood)
 export(get_phi)
 export(get_theta_estimate)
 export(get_top_relevance_words)

@@ -12,4 +12,3 @@ calculate_ttm_density(typeTopicMatrix)
 \description{
 Calculate the density (sparsity) of the type topic matrix
 }
-

@@ -13,4 +13,3 @@ get_theta_estimate(lda)
 Get an estimate of the document topic distribution
 (the theta matrix) from an LDA sampler
 }
-
