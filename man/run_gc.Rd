@@ -6,6 +6,9 @@
 \usage{
 run_gc(...)
 }
+\arguments{
+\item{...}{any arguments to gc}
+}
 \description{
 Runs the garbage collectors in both R (first) and Java
 }

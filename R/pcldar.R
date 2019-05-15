@@ -116,6 +116,7 @@ create_lda_dataset <- function(train, test = NULL, stoplist_fn = "stoplist.txt")
 #' @param ds LDA dataset
 #' @param iterations number of iterations to run
 #' @param samplerType Java class of the sampler. Must implement the LDASampler interface
+#' @param testset If give, the left-to-right held out log likelihood will be calculated on this dataset
 #'
 #' @importFrom rJava .jnew .jcall .jarray .jcast .jnull
 #' @export
@@ -352,6 +353,8 @@ get_held_out_log_likelihood <- function(lda) {
 #' run_gc
 #'
 #' Runs the garbage collectors in both R (first) and Java
+#'
+#' @param ... any arguments to gc
 #'
 #' @importFrom rJava J
 #' @export
