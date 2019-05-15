@@ -8,6 +8,7 @@
 #' @param beta symmetric beta prior
 #' @param iterations number of iterations to sample
 #' @param rareword_threshold min. number of occurences of a word to be kept
+#' @param optim_interval how often to do hyperparameter optimization (default is off = -1)
 #' @param stoplist_fn filenname of stoplist file (one word per line) (default "stoplist.txt")
 #' @param topic_interval how often to print topic info during sampling
 #' @param tmpdir temporary directory for intermediate storage of logging data (default "tmp")
@@ -16,7 +17,7 @@
 #' @export
 new_simple_lda_config <- function(dataset_fn, nr_topics = 20, alpha = 0.01,
                                beta = (nr_topics / 50), iterations = 2000,
-                               rareword_threshold = 10,
+                               rareword_threshold = 10, optim_interval = -1,
                                stoplist_fn = "stoplist.txt", topic_interval = 10,
                                tmpdir = "/tmp") {
   lu <- .jnew("cc.mallet.util.LoggingUtils")
@@ -44,6 +45,9 @@ new_simple_lda_config <- function(dataset_fn, nr_topics = 20, alpha = 0.01,
   .jcall(slc,"V","setNoBatches",btc)
   .jcall(slc,"V","setStoplistFilename",stoplist_fn)
   .jcall(slc,"V","setDatasetFilename",dataset_fn)
+  hpo <- .jnew("java.lang.Integer",as.integer(topic_interval))
+  .jcall(slc,"V","setHyperparamOptimInterval",hpo)
+
   return(slc)
 }
 
@@ -343,6 +347,18 @@ get_log_likelihood <- function(lda) {
 get_held_out_log_likelihood <- function(lda) {
   ll  <- .jcall(lda,"[D","getHeldOutLogLikelihood",simplify = TRUE)
   return(ll)
+}
+
+#' run_gc
+#'
+#' Runs the garbage collectors in both R (first) and Java
+#'
+#' @importFrom rJava J
+#' @export
+run_gc <- function(...) {
+  gc(...)
+  J("java.lang.Runtime")$getRuntime()$gc()
+  invisible()
 }
 
 

@@ -6,7 +6,8 @@
 \usage{
 new_simple_lda_config(dataset_fn, nr_topics = 20, alpha = 0.01,
   beta = (nr_topics/50), iterations = 2000, rareword_threshold = 10,
-  stoplist_fn = "stoplist.txt", topic_interval = 10, tmpdir = "/tmp")
+  optim_interval = -1, stoplist_fn = "stoplist.txt",
+  topic_interval = 10, tmpdir = "/tmp")
 }
 \arguments{
 \item{dataset_fn}{filename of dataset (in LDA format)}
@@ -20,6 +21,8 @@ new_simple_lda_config(dataset_fn, nr_topics = 20, alpha = 0.01,
 \item{iterations}{number of iterations to sample}
 
 \item{rareword_threshold}{min. number of occurences of a word to be kept}
+
+\item{optim_interval}{how often to do hyperparameter optimization (default is off = -1)}
 
 \item{stoplist_fn}{filenname of stoplist file (one word per line) (default "stoplist.txt")}
 
