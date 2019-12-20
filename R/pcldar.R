@@ -12,6 +12,7 @@
 #' @param stoplist_fn filenname of stoplist file (one word per line) (default "stoplist.txt")
 #' @param topic_interval how often to print topic info during sampling
 #' @param tmpdir temporary directory for intermediate storage of logging data (default "tmp")
+#' @param topic_priors text file with 'prior spec' with one topic per line with format: <topic nr(zero idxed)>, <word1>, <word2>, etc
 #'
 #' @importFrom rJava .jnew .jcall
 #' @export

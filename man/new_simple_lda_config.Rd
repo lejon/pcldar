@@ -7,7 +7,8 @@
 new_simple_lda_config(dataset_fn, nr_topics = 20, alpha = 0.01,
   beta = (nr_topics/50), iterations = 2000, rareword_threshold = 10,
   optim_interval = -1, stoplist_fn = "stoplist.txt",
-  topic_interval = 10, tmpdir = "/tmp")
+  topic_interval = 10, tmpdir = "/tmp",
+  topic_priors = "stoplist.txt")
 }
 \arguments{
 \item{dataset_fn}{filename of dataset (in LDA format)}
@@ -29,6 +30,8 @@ new_simple_lda_config(dataset_fn, nr_topics = 20, alpha = 0.01,
 \item{topic_interval}{how often to print topic info during sampling}
 
 \item{tmpdir}{temporary directory for intermediate storage of logging data (default "tmp")}
+
+\item{topic_priors}{text file with 'prior spec' with one topic per line with format: <topic nr(zero idxed)>, <word1>, <word2>, etc}
 }
 \description{
 Create a new LDA config file
