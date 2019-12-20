@@ -19,7 +19,7 @@ new_simple_lda_config <- function(dataset_fn, nr_topics = 20, alpha = 0.01,
                                beta = (nr_topics / 50), iterations = 2000,
                                rareword_threshold = 10, optim_interval = -1,
                                stoplist_fn = "stoplist.txt", topic_interval = 10,
-                               tmpdir = "/tmp") {
+                               tmpdir = "/tmp", topic_priors = "stoplist.txt") {
   lu <- .jnew("cc.mallet.util.LoggingUtils")
   .jcall(lu,"Ljava/io/File;","checkAndCreateCurrentLogDir",tmpdir);
   #SimpleLDAConfiguration(LoggingUtils logUtil, String scheme,
@@ -44,9 +44,11 @@ new_simple_lda_config <- function(dataset_fn, nr_topics = 20, alpha = 0.01,
   btc <- .jnew("java.lang.Integer",as.integer(5))
   .jcall(slc,"V","setNoBatches",btc)
   .jcall(slc,"V","setStoplistFilename",stoplist_fn)
+  .jcall(slc,"V","setTopicPriorFilename",topic_priors)
   .jcall(slc,"V","setDatasetFilename",dataset_fn)
   hpo <- .jnew("java.lang.Integer",as.integer(topic_interval))
   .jcall(slc,"V","setHyperparamOptimInterval",hpo)
+  .jcall(slc,"V","setNoPreprocess",TRUE)
 
   return(slc)
 }
@@ -89,7 +91,7 @@ create_lda_dataset <- function(train, test = NULL, stoplist_fn = "stoplist.txt")
   stringIterator <- .jnew("cc.mallet.util.StringClassArrayIterator", train)
   util <- .jnew("cc.mallet.util.LDAUtils")
   pipe <- .jcall(util,"Lcc/mallet/pipe/Pipe;","buildSerialPipe", stoplist_fn,
-                 .jcast(.jnull(),"cc.mallet.types.Alphabet"))
+                 .jcast(.jnull(),"cc.mallet.types.Alphabet"), TRUE)
 
   il <- .jnew("cc.mallet.types.InstanceList",pipe)
   .jcall(il,"V","addThruPipe", .jcast(stringIterator,"java.util.Iterator"))
@@ -99,7 +101,7 @@ create_lda_dataset <- function(train, test = NULL, stoplist_fn = "stoplist.txt")
     stringIterator <- .jnew("cc.mallet.util.StringClassArrayIterator", test)
     trainAlphabet <- .jcall(il,"Lcc/mallet/types/Alphabet;","getAlphabet")
     testPipe <- .jcall(util,"Lcc/mallet/pipe/Pipe;","buildSerialPipe", stoplist_fn,
-                       trainAlphabet)
+                       trainAlphabet, TRUE)
     iltest <- .jnew("cc.mallet.types.InstanceList",testPipe)
     .jcall(iltest,"V","addThruPipe", .jcast(stringIterator,"java.util.Iterator"))
     return(list(train=il, test=iltest))
