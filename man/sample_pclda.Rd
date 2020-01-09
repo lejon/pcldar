@@ -5,7 +5,8 @@
 \title{sample_pclda}
 \usage{
 sample_pclda(ldaconfig, ds, iterations = 2000,
-  samplerType = "cc.mallet.topics.PolyaUrnSpaliasLDA", testset = NULL)
+  samplerType = "cc.mallet.topics.PolyaUrnSpaliasLDA", testset = NULL,
+  save_sampler = TRUE)
 }
 \arguments{
 \item{ldaconfig}{LDA config object}

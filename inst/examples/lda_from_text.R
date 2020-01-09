@@ -33,7 +33,6 @@ tw <- get_topwords(lda)
 trw <- get_top_relevance_words(lda,cnf)
 
 ll <- get_log_likelihood(lda)
-ll <- ll[-length(ll)]
 ll
 
 hll <- get_held_out_log_likelihood(lda)

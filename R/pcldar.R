@@ -74,6 +74,39 @@ load_lda_dataset <- function(fn, ldaconfig) {
   return(ds)
 }
 
+#' load_lda_sampler
+#'
+#' Load an LDA sampler from file.
+#'
+#' @param ldaconfig LDA config object
+#' @param ds LDA dataset
+#' @param store_dir directory name containing stored sampler
+#'
+#' @importFrom rJava .jnew .jcall .jcast
+#' @export
+load_lda_sampler <- function(ldaconfig, ds, store_dir="stored_samplers") {
+  util <- .jnew("cc.mallet.util.LDAUtils")
+
+  # Load the stored sampler
+  ss <- .jcall(util,"Lcc/mallet/topics/LDASamplerWithPhi;","loadStoredSampler",
+               ds,
+               .jcast(ldaconfig,"cc.mallet.configuration.LDAConfiguration"),
+               store_dir);
+
+  samplerType <- .jcall(.jcall(ss,"Ljava/lang/Class;","getClass"),"Ljava/lang/String;", "getName")
+
+  # Create the new sampler
+  lcfg <- .jcast(ldaconfig,"cc.mallet.configuration.LDAConfiguration")
+  ex <- tryCatch(lda <- .jnew(samplerType, lcfg), NullPointerException = function(ex) ex)
+
+  # Init the new sampler from the stored sampler
+  .jcall(.jcast(lda,"cc.mallet.topics.LDASamplerInitiable"),
+         "V","initFrom",.jcast(ss,"cc.mallet.topics.LDAGibbsSampler"))
+
+  # Return the new initialized sampler
+  return(lda)
+}
+
 #' create_lda_dataset
 #'
 #' Create an LDA dataset from existing string vector. Each entry
@@ -125,7 +158,7 @@ create_lda_dataset <- function(train, test = NULL, stoplist_fn = "stoplist.txt")
 #' @export
 sample_pclda <- function(ldaconfig, ds, iterations = 2000,
                          samplerType="cc.mallet.topics.PolyaUrnSpaliasLDA",
-                         testset = NULL) {
+                         testset = NULL, save_sampler=TRUE) {
   #.jconstructors(samplerType)
   lcfg <- .jcast(ldaconfig,"cc.mallet.configuration.LDAConfiguration")
   ex <- tryCatch(lda <- .jnew(samplerType,lcfg), NullPointerException = function(ex) ex)
@@ -134,7 +167,32 @@ sample_pclda <- function(ldaconfig, ds, iterations = 2000,
   if(!is.null(testset)) {
     .jcall(lda,"V", "addTestInstances", testset)
   }
+
   .jcall(lda,"V", "sample", as.integer(iterations))
+
+  if(save_sampler) {
+    sampler_dir <- J("cc.mallet.configuration.LDAConfiguration")$STORED_SAMPLER_DIR_DEFAULT
+    samplerFolder <- .jcall(ldaconfig,"S","getSavedSamplerDirectory",sampler_dir)
+    util <- .jnew("cc.mallet.util.LDAUtils")
+    .jcall(util,"V","saveSampler",
+           .jcast(lda,"cc.mallet.topics.LDAGibbsSampler"),
+           .jcast(ldaconfig,"cc.mallet.configuration.LDAConfiguration"),
+           samplerFolder)
+  }
+  return(lda)
+}
+
+#' sample_pclda_continue
+#'
+#' continue sampling using a trained sampler
+#'
+#' @param lda LDA sampler
+#'
+#' @importFrom rJava .jcall
+#' @export
+sample_pclda_continue <- function(lda,  iterations = 2000) {
+  .jcall(lda,"V", "sample", as.integer(iterations))
+
   return(lda)
 }
 
