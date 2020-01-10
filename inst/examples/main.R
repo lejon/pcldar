@@ -1,3 +1,5 @@
+options(java.parameters = c("-Xmx6g","-Djava.util.logging.config.file=resources/logging.properties"))
+
 library(pcldar)
 nr_topics <- 20
 ds_fn <- "nips.txt"
