@@ -153,6 +153,7 @@ create_lda_dataset <- function(train, test = NULL, stoplist_fn = "stoplist.txt")
 #' @param iterations number of iterations to run
 #' @param samplerType Java class of the sampler. Must implement the LDASampler interface
 #' @param testset If give, the left-to-right held out log likelihood will be calculated on this dataset
+#' @param save_sampler booean indicating that the sampler should be saved to file after finishing (default TRUE)
 #'
 #' @importFrom rJava .jnew .jcall .jarray .jcast .jnull
 #' @export
@@ -187,6 +188,7 @@ sample_pclda <- function(ldaconfig, ds, iterations = 2000,
 #' continue sampling using a trained sampler
 #'
 #' @param lda LDA sampler
+#' @param iterations how many iterations to sample
 #'
 #' @importFrom rJava .jcall
 #' @export

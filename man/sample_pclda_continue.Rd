@@ -8,6 +8,8 @@ sample_pclda_continue(lda, iterations = 2000)
 }
 \arguments{
 \item{lda}{LDA sampler}
+
+\item{iterations}{how many iterations to sample}
 }
 \description{
 continue sampling using a trained sampler

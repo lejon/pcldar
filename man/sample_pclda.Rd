@@ -18,6 +18,8 @@ sample_pclda(ldaconfig, ds, iterations = 2000,
 \item{samplerType}{Java class of the sampler. Must implement the LDASampler interface}
 
 \item{testset}{If give, the left-to-right held out log likelihood will be calculated on this dataset}
+
+\item{save_sampler}{booean indicating that the sampler should be saved to file after finishing (default TRUE)}
 }
 \description{
 Run the PCLDA (default Polya Urn) sampler
